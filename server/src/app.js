@@ -20,6 +20,12 @@ app.get('/', (req, res) => {
   })
 })
 
+app.post('/register', (req, res) => {
+  res.send({
+    message: `Hello ${req.body.email} registered`
+  })
+})
+
 app.set('port', process.env.PORT || 8081)
 
 const server = app.listen(app.get('port'), () => {
