@@ -2,6 +2,15 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
+const admin = require('firebase-admin')
+
+let serviceAccount = require('../src/config/ServiceAccount.json')
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+})
+
+let db = admin.firestore()
 
 const app = express()
 app.use(morgan('combined'))
@@ -15,9 +24,22 @@ app.get('/status', (req, res) => {
 })
 
 app.get('/', (req, res) => {
-  res.send({
-    message: 'coucou'
-  })
+  db.collection('users').get()
+    .then((snapshot) => {
+      let result = []
+      snapshot.forEach((doc) => {
+        result.push({
+          id: doc.id,
+          data: doc.data()
+        })
+        console.log(result)
+        console.log(doc.id, '=>', doc.data())
+      })
+      res.send(result)
+    })
+    .catch((err) => {
+      console.log('Error getting documents', err);
+    })
 })
 
 app.post('/register', (req, res) => {
