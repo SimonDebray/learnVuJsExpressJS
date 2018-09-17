@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import Register from '@/components/Register'
+import Home from '@/components/Home'
+import Articles from '@/components/Articles'
+import About from '@/components/About'
+import Pricing from '@/components/Pricing'
 
 Vue.use(Router)
 
@@ -10,11 +12,19 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: HelloWorld
+      component: Home
     },
     {
-      path: '/register',
-      component: Register
+      path: '/apropos',
+      component: About
+    },
+    {
+      path: '/articles',
+      component: Articles
+    },
+    {
+      path: '/reserver',
+      component: Pricing
     }
   ]
 })
